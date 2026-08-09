@@ -104,7 +104,13 @@ function renderResults(query = '') {
       <span class="result-title">${escapeHtml(entry.title)}</span>
       <span class="class-badge ${classBadgeClass(entry.classification)}">${entry.classification}</span>
     `;
-    row.addEventListener('click', () => selectCode(entry));
+    row.addEventListener('click', (e) => {
+      if (e.shiftKey) {
+        addChargeDirectly(entry);
+      } else {
+        selectCode(entry);
+      }
+    });
     els.results.appendChild(row);
   });
 }
@@ -151,16 +157,22 @@ els.goBackBtn.addEventListener('click', () => {
   renderResults(els.search.value);
 });
 
-els.addBtn.addEventListener('click', () => {
-  if (!selectedCode) return;
-  recentCharges.push({ ...selectedCode });
+function addChargeDirectly(entry) {
+  recentCharges.push({ ...entry });
   saveCharges();
   renderRecentCharges();
   renderSummary();
-  showToast(`Added ${codeLabel(selectedCode)}`);
-  selectedCode = null;
-  renderPreview();
+  showToast(`Added ${codeLabel(entry)}`);
+  if (selectedCode && selectedCode.class === entry.class && selectedCode.code === entry.code) {
+    selectedCode = null;
+    renderPreview();
+  }
   renderResults(els.search.value);
+}
+
+els.addBtn.addEventListener('click', () => {
+  if (!selectedCode) return;
+  addChargeDirectly(selectedCode);
 });
 
 function buildCopyText() {
