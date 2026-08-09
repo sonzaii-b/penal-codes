@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEO Penal Code Calculator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <p class="eyebrow">GVRN &middot; Records &amp; Charges</p>
+  <h1>LEO Penal Code Calculator</h1>
+
+  <div class="search-wrap">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="7"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input id="search" type="text" placeholder="Search by code or keyword..." autocomplete="off">
+  </div>
+
+  <div class="results" id="results"></div>
+
+  <div class="panels">
+    <div class="panel">
+      <div class="panel-header">Recent Charges</div>
+      <div class="panel-body" id="recentCharges"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">Preview</div>
+      <div class="preview-content" id="previewContent">
+        <div class="empty-state small">Select a code to preview it here</div>
+      </div>
+      <div class="preview-actions">
+        <button class="btn btn-go-back" id="goBackBtn" disabled>Go Back</button>
+        <button class="btn btn-add" id="addBtn" disabled>Add to Charge</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <button class="btn btn-copy" id="copyBtn">Copy Information</button>
+    <button class="btn btn-reset" id="resetBtn">Reset</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="penal-codes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
