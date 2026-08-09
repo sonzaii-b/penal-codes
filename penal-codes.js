@@ -1,28 +1,206 @@
 /*
-  PENAL CODES DATA
-  =================
-  This is the only file you need to touch to load in the real code list.
-  Replace the sample entries below with the full set. Each entry looks like:
+  PENAL CODES DATA — GVRN
+  =========================
+  This is the only file you should need to touch to update the code list.
+  Each entry:
 
   {
-    class: 6,                        // the number in "(6)15" — severity class
-    code: "15",                      // the number after the class — code number
-    title: "Speeding (5-15 over)",   // charge name
-    fine: 250,                       // dollar amount, no $ sign, no commas
-    jailDays: 0,                     // 0 = no jail time attached to this charge
+    class: 1,                 // the number in "(1)01" — the Title number
+    code: "01",                // the number after the class
+    title: "Criminal Threats", // charge name
+    category: "Crimes Against People", // Title name, shown as a section label
+    classification: "Misdemeanor",     // "Citation" | "Misdemeanor" | "Felony"
+    fine: 700,                 // dollar amount, 0 if none
+    jailSeconds: 30,           // jail time in seconds, 0 if none
+    impound: null,             // null | true | "discretion"
   },
 
-  Notes:
-  - "class" and "code" together make the displayed code, e.g. (6)15
-  - Leave jailDays at 0 if a charge never carries jail time.
-  - Order doesn't matter — search works across all entries.
-  - You can have duplicate classes, that's expected (most departments group
-    charges by class, e.g. all Class 6 = traffic).
+  - impound: true means impoundment is mandatory. "discretion" means the
+    charge sheet says "(Trooper Discretion)". null means no impoundment.
+  - Order doesn't matter for search, only for how it lists inside its section.
 */
 
 const PENAL_CODES = [
-  { class: 6, code: "15", title: "Speeding (5-15 over)", fine: 250, jailDays: 0 },
-  { class: 6, code: "16", title: "Speeding (16-34 over)", fine: 500, jailDays: 0 },
-  { class: 6, code: "17", title: "Speeding (35+ over)", fine: 1000, jailDays: 5 },
-  { class: 2, code: "04", title: "Reckless Driving", fine: 750, jailDays: 10 },
+  // ---------------- Title 1: Crimes Against People ----------------
+  { class: 1, code: "01", title: "Criminal Threats", category: "Crimes Against People", classification: "Misdemeanor", fine: 700, jailSeconds: 30, impound: null },
+  { class: 1, code: "02", title: "Assault with a Deadly Weapon", category: "Crimes Against People", classification: "Felony", fine: 1500, jailSeconds: 120, impound: null },
+  { class: 1, code: "03", title: "Battery", category: "Crimes Against People", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 1, code: "04", title: "Aggravated Battery", category: "Crimes Against People", classification: "Felony", fine: 0, jailSeconds: 120, impound: null },
+  { class: 1, code: "05", title: "Attempted Murder", category: "Crimes Against People", classification: "Felony", fine: 9000, jailSeconds: 90, impound: null },
+  { class: 1, code: "06", title: "Manslaughter", category: "Crimes Against People", classification: "Felony", fine: 2000, jailSeconds: 150, impound: null },
+  { class: 1, code: "07", title: "Murder", category: "Crimes Against People", classification: "Felony", fine: 2500, jailSeconds: 120, impound: null },
+  { class: 1, code: "08", title: "False Imprisonment", category: "Crimes Against People", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 1, code: "09", title: "Kidnapping", category: "Crimes Against People", classification: "Felony", fine: 6500, jailSeconds: 150, impound: null },
+  { class: 1, code: "10", title: "Domestic Violence", category: "Crimes Against People", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 1, code: "11", title: "Domestic Violence (Physical Traumatic Injury)", category: "Crimes Against People", classification: "Felony", fine: 10000, jailSeconds: 120, impound: null },
+  { class: 1, code: "12", title: "Assault on a Public Servant", category: "Crimes Against People", classification: "Felony", fine: 1000, jailSeconds: 120, impound: null },
+  { class: 1, code: "13", title: "Attempted Assault on a Public Servant", category: "Crimes Against People", classification: "Felony", fine: 1000, jailSeconds: 100, impound: null },
+  { class: 1, code: "14", title: "Attempted Assault", category: "Crimes Against People", classification: "Felony", fine: 1000, jailSeconds: 100, impound: null },
+  { class: 1, code: "15", title: "Assault on a Peace Officer", category: "Crimes Against People", classification: "Felony", fine: 2000, jailSeconds: 180, impound: null },
+
+  // ---------------- Title 2: Crimes Against Property ----------------
+  { class: 2, code: "01", title: "Arson", category: "Crimes Against Property", classification: "Felony", fine: 0, jailSeconds: 230, impound: null },
+  { class: 2, code: "02", title: "Trespassing", category: "Crimes Against Property", classification: "Misdemeanor", fine: 1000, jailSeconds: 30, impound: null },
+  { class: 2, code: "03", title: "Trespassing within a Restricted Facility", category: "Crimes Against Property", classification: "Felony", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 2, code: "04", title: "Burglary", category: "Crimes Against Property", classification: "Felony", fine: 0, jailSeconds: 150, impound: null },
+  { class: 2, code: "05", title: "Possession of Burglary Tools", category: "Crimes Against Property", classification: "Misdemeanor", fine: 1000, jailSeconds: 30, impound: null },
+  { class: 2, code: "06", title: "Robbery", category: "Crimes Against Property", classification: "Felony", fine: 6000, jailSeconds: 120, impound: null },
+  { class: 2, code: "07", title: "Armed Robbery", category: "Crimes Against Property", classification: "Felony", fine: 7500, jailSeconds: 150, impound: null },
+  { class: 2, code: "08", title: "Petty Theft", category: "Crimes Against Property", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 2, code: "09", title: "Grand Theft", category: "Crimes Against Property", classification: "Felony", fine: 0, jailSeconds: 90, impound: null },
+  { class: 2, code: "10", title: "Grand Theft Auto", category: "Crimes Against Property", classification: "Felony", fine: 6000, jailSeconds: 160, impound: null },
+  { class: 2, code: "11", title: "Receiving Stolen Property", category: "Crimes Against Property", classification: "Felony", fine: 10000, jailSeconds: 90, impound: null },
+  { class: 2, code: "12", title: "Extortion", category: "Crimes Against Property", classification: "Felony", fine: 10000, jailSeconds: 150, impound: null },
+  { class: 2, code: "13", title: "Forgery/Fraud", category: "Crimes Against Property", classification: "Felony", fine: 0, jailSeconds: 90, impound: null },
+  { class: 2, code: "14", title: "Vandalism", category: "Crimes Against Property", classification: "Misdemeanor", fine: 750, jailSeconds: 30, impound: null },
+  { class: 2, code: "15", title: "Loitering", category: "Crimes Against Property", classification: "Misdemeanor", fine: 1000, jailSeconds: 30, impound: null },
+  { class: 2, code: "16", title: "Destruction of Civilian Property", category: "Crimes Against Property", classification: "Misdemeanor", fine: 1000, jailSeconds: 120, impound: null },
+  { class: 2, code: "17", title: "Destruction of Government Property", category: "Crimes Against Property", classification: "Felony", fine: 10000, jailSeconds: 230, impound: null },
+  { class: 2, code: "18", title: "Criminal Mischief", category: "Crimes Against Property", classification: "Misdemeanor", fine: 750, jailSeconds: 30, impound: null },
+  { class: 2, code: "19", title: "Possession of a Stolen Vehicle", category: "Crimes Against Property", classification: "Felony", fine: 5000, jailSeconds: 90, impound: null },
+  { class: 2, code: "20", title: "Attempted Burglary", category: "Crimes Against Property", classification: "Felony", fine: 4000, jailSeconds: 120, impound: null },
+  { class: 2, code: "21", title: "Shoplifting", category: "Crimes Against Property", classification: "Misdemeanor", fine: 500, jailSeconds: 30, impound: null },
+  { class: 2, code: "22", title: "Criminal Tampering", category: "Crimes Against Property", classification: "Misdemeanor", fine: 750, jailSeconds: 30, impound: null },
+
+  // ---------------- Title 3: Crimes Public Decency ----------------
+  { class: 3, code: "01", title: "Lewd or Dissolute Conduct In Public", category: "Crimes Public Decency", classification: "Misdemeanor", fine: 0, jailSeconds: 90, impound: null },
+  { class: 3, code: "02", title: "Stalking", category: "Crimes Public Decency", classification: "Misdemeanor", fine: 0, jailSeconds: 90, impound: null },
+
+  // ---------------- Title 4: Crimes Against Criminal Justice ----------------
+  { class: 4, code: "01", title: "Bribery", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 10000, jailSeconds: 120, impound: null },
+  { class: 4, code: "02", title: "Dissuading a Victim", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 0, jailSeconds: 60, impound: null },
+  { class: 4, code: "03", title: "False Information to a Peace Officer", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 0, jailSeconds: 120, impound: null },
+  { class: 4, code: "04", title: "Filing a False Police Report", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 0, jailSeconds: 60, impound: null },
+  { class: 4, code: "05", title: "Failure to Identify to a Peace Officer", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 4, code: "06", title: "Impersonation of a Public Servant", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 4, code: "07", title: "Obstruction of a Peace Officer", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 4, code: "08", title: "Resisting a Peace Officer", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 120, impound: null },
+  { class: 4, code: "09", title: "Escape from Custody", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 1000, jailSeconds: 210, impound: null },
+  { class: 4, code: "10", title: "Prisoner Breakout", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 10000, jailSeconds: 90, impound: null },
+  { class: 4, code: "11", title: "Misuse of Government Hotline", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 4, code: "12", title: "Tampering with Evidence", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 4, code: "13", title: "Introduction of Contraband", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 0, jailSeconds: 120, impound: null },
+  { class: 4, code: "14", title: "False Arrest", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 10000, jailSeconds: 120, impound: null },
+  { class: 4, code: "15", title: "Failure to Inform", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 500, jailSeconds: 0, impound: null },
+  { class: 4, code: "16", title: "Obstruction of Justice", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 500, jailSeconds: 30, impound: null },
+  { class: 4, code: "17", title: "Disorderly Conduct", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 4, code: "18", title: "Failure to Comply with a Lawful Order", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 500, jailSeconds: 30, impound: null },
+  { class: 4, code: "19", title: "Aiding and Abetting", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 0, jailSeconds: 90, impound: null },
+  { class: 4, code: "20", title: "Perjury", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 2500, jailSeconds: 90, impound: null },
+  { class: 4, code: "21", title: "Contempt of Court", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 4, code: "22", title: "Escape from Custody (Attempted)", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 5000, jailSeconds: 120, impound: null },
+  { class: 4, code: "23", title: "Unpaid Citation(s)", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 100, jailSeconds: 60, impound: null },
+
+  // ---------------- Title 5: Crimes Against Public Peace ----------------
+  { class: 5, code: "01", title: "Disturbing the Peace", category: "Crimes Against Public Peace", classification: "Misdemeanor", fine: 500, jailSeconds: 0, impound: null },
+  { class: 5, code: "02", title: "Unlawful Assembly", category: "Crimes Against Public Peace", classification: "Felony", fine: 0, jailSeconds: 90, impound: null },
+  { class: 5, code: "03", title: "Inciting Riot", category: "Crimes Against Public Peace", classification: "Felony", fine: 1000, jailSeconds: 120, impound: null },
+
+  // ---------------- Title 6: Traffic Offenses ----------------
+  { class: 6, code: "01", title: "Invalid/No Vehicle Registration/Insurance", category: "Traffic Offenses", classification: "Citation", fine: 200, jailSeconds: 0, impound: "discretion" },
+  { class: 6, code: "02", title: "Driving Without a License", category: "Traffic Offenses", classification: "Citation", fine: 1000, jailSeconds: 0, impound: "discretion" },
+  { class: 6, code: "03", title: "Driving With a Suspended or Revoked License", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: true },
+  { class: 6, code: "04", title: "Accident Reporting Requirements – Property Damage", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: "discretion" },
+  { class: 6, code: "05", title: "Accident Reporting Requirements – Injury or Death", category: "Traffic Offenses", classification: "Felony", fine: 10000, jailSeconds: 120, impound: null },
+  { class: 6, code: "06", title: "Failure to Obey Traffic Signal", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "07", title: "Driving Opposite Lanes", category: "Traffic Offenses", classification: "Misdemeanor", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "08", title: "Failure to Maintain Lane", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "09", title: "Unsafe Following Distance", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "10", title: "Failure to Yield to Civilian", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "11", title: "Failure to Yield to Emergency Vehicle", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "12", title: "Unsafe Turn", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "13", title: "Unsafe Lane Change", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "14", title: "Illegal U-Turn", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "15", title: "Speeding (5-15 MPH Over)", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "16", title: "Speeding (16-30 MPH Over)", category: "Traffic Offenses", classification: "Citation", fine: 360, jailSeconds: 0, impound: null },
+  { class: 6, code: "17", title: "Felony Speeding (31+ MPH Over)", category: "Traffic Offenses", classification: "Felony", fine: 880, jailSeconds: 80, impound: null },
+  { class: 6, code: "18", title: "Unreasonably Slow / Stopped", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "19", title: "Failure to Obey Stop Sign", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "20", title: "Illegally Parked", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "21", title: "Reckless Driving", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 6, code: "22", title: "Street Racing", category: "Traffic Offenses", classification: "Misdemeanor", fine: 400, jailSeconds: 0, impound: true },
+  { class: 6, code: "23", title: "Throwing Objects", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 6, code: "24", title: "Operating While Intoxicated", category: "Traffic Offenses", classification: "Misdemeanor", fine: 2000, jailSeconds: 60, impound: true },
+  { class: 6, code: "25", title: "Enhanced Operating While Intoxicated", category: "Traffic Offenses", classification: "Felony", fine: 4000, jailSeconds: 120, impound: true },
+  { class: 6, code: "26", title: "Alcohol Beverages in Motor Vehicles", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "27", title: "Evading a Peace Officer", category: "Traffic Offenses", classification: "Misdemeanor", fine: 0, jailSeconds: 270, impound: null },
+  { class: 6, code: "28", title: "Felony Evading a Peace Officer", category: "Traffic Offenses", classification: "Felony", fine: 0, jailSeconds: 350, impound: null },
+  { class: 6, code: "29", title: "Road Rage", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1500, jailSeconds: 0, impound: null },
+  { class: 6, code: "30", title: "Littering", category: "Traffic Offenses", classification: "Citation", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 6, code: "31", title: "Unsafe Speed for Conditions", category: "Traffic Offenses", classification: "Citation", fine: 2000, jailSeconds: 0, impound: null },
+  { class: 6, code: "32", title: "Public Endangerment", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 6, code: "33", title: "Impeding Traffic", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "34", title: "Jaywalking", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "35", title: "Unnecessary Use of Horn", category: "Traffic Offenses", classification: "Citation", fine: 480, jailSeconds: 0, impound: null },
+  { class: 6, code: "36", title: "Excessive Music/Sounds", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "37", title: "Failure to Sign Citation", category: "Traffic Offenses", classification: "Misdemeanor", fine: 250, jailSeconds: 30, impound: true },
+  { class: 6, code: "38", title: "Failure to Yield to Pedestrian", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "39", title: "Distracted Driving", category: "Traffic Offenses", classification: "Citation", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 6, code: "40", title: "Driving on Shoulder/Emergency Lane", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "41", title: "Failure to Yield for Emergency Services", category: "Traffic Offenses", classification: "Citation", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 6, code: "42", title: "Driving Without Headlights", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "43", title: "Hit and Run", category: "Traffic Offenses", classification: "Misdemeanor", fine: 500, jailSeconds: 0, impound: true },
+  { class: 6, code: "44", title: "Attempted Vehicular Manslaughter", category: "Traffic Offenses", classification: "Felony", fine: 750, jailSeconds: 60, impound: null },
+  { class: 6, code: "45", title: "Vehicular Manslaughter", category: "Traffic Offenses", classification: "Felony", fine: 750, jailSeconds: 120, impound: null },
+  { class: 6, code: "46", title: "Reckless Evasion", category: "Traffic Offenses", classification: "Felony", fine: 0, jailSeconds: 120, impound: null },
+  { class: 6, code: "47", title: "Possession of a Stolen Vehicle", category: "Traffic Offenses", classification: "Felony", fine: 0, jailSeconds: 120, impound: null },
+  { class: 6, code: "48", title: "Reckless Endangerment", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 6, code: "49", title: "Unroadworthy Vehicle", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: true },
+  { class: 6, code: "50", title: "Passing a Stopped School Bus", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 6, code: "51", title: "Speeding in a School Zone (5+ MPH Over)", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 6, code: "52", title: "Drifting", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: true },
+  { class: 6, code: "53", title: "Exhibition of Speed", category: "Traffic Offenses", classification: "Misdemeanor", fine: 750, jailSeconds: 45, impound: true },
+  { class: 6, code: "54", title: "Burnout", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "55", title: "Failure to Maintain Control of Vehicle", category: "Traffic Offenses", classification: "Citation", fine: 350, jailSeconds: 0, impound: null },
+  { class: 6, code: "56", title: "Unsafe Passing", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "57", title: "Passing in No Passing Zone", category: "Traffic Offenses", classification: "Citation", fine: 300, jailSeconds: 0, impound: null },
+  { class: 6, code: "58", title: "Following Emergency Vehicle Too Closely", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "59", title: "Failure to Move Over for Emergency Vehicle", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "60", title: "Obstruction of Traffic", category: "Traffic Offenses", classification: "Citation", fine: 350, jailSeconds: 0, impound: null },
+  { class: 6, code: "61", title: "Blocking Intersection", category: "Traffic Offenses", classification: "Citation", fine: 300, jailSeconds: 0, impound: null },
+  { class: 6, code: "62", title: "Improper Turn", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "63", title: "Driving Without Due Regard", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "64", title: "Operating Unsafe Vehicle", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "65", title: "Improper Display of License Plate", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "67", title: "Illegal Window Tint", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "68", title: "Illegal Vehicle Modifications", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "69", title: "Driving on a Sidewalk", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "70", title: "Endangering Pedestrians", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 6, code: "71", title: "Unsafe Reversing", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "72", title: "Going Around the Crossing Gates", category: "Traffic Offenses", classification: "Citation", fine: 360, jailSeconds: 0, impound: null },
+  { class: 6, code: "73", title: "Driving the Wrong Way on a One-Way Road", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "74", title: "Unsafe Lane Merge", category: "Traffic Offenses", classification: "Citation", fine: 350, jailSeconds: 0, impound: null },
+  { class: 6, code: "75", title: "Failure to Dim Headlights", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "76", title: "Improper Use of High Beams", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "77", title: "Following Too Closely to an Emergency Vehicle", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "78", title: "Failure to Obey Traffic Control Device", category: "Traffic Offenses", classification: "Citation", fine: 300, jailSeconds: 0, impound: null },
+  { class: 6, code: "79", title: "Failure to Obey Railroad Crossing Signals", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "80", title: "Unsafe Backing", category: "Traffic Offenses", classification: "Citation", fine: 300, jailSeconds: 0, impound: null },
+  { class: 6, code: "81", title: "Crossing a Median", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "82", title: "Failure to Secure Vehicle (Left Unattended)", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "83", title: "Improper Use of Turn Lane", category: "Traffic Offenses", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 6, code: "84", title: "Unsafe Passing of a School Bus", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 6, code: "85", title: "Failure to Stop at a Railroad Crossing (Commercial Vehicle)", category: "Traffic Offenses", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 6, code: "86", title: "Driving Without Required Safety Equipment", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "88", title: "Improper Towing of a Vehicle", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "89", title: "Operating a Vehicle with an Obstructed View", category: "Traffic Offenses", classification: "Citation", fine: 350, jailSeconds: 0, impound: null },
+  { class: 6, code: "90", title: "Improper Load Securement", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+
+  // ---------------- Title 7: Control Of A Deadly Weapon And Equipment ----------------
+  { class: 7, code: "01", title: "Possession of an Illegal Weapon", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 7, code: "02", title: "Brandishing a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+  { class: 7, code: "03", title: "Illegal Discharge of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 0, jailSeconds: 90, impound: null },
+  { class: 7, code: "04", title: "Unlicensed Possession of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 0, jailSeconds: 90, impound: null },
+  { class: 7, code: "05", title: "Possession of a Stolen Weapon", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 0, jailSeconds: 90, impound: null },
+  { class: 7, code: "06", title: "Unlawful Distribution of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 0, jailSeconds: 90, impound: null },
+  { class: 7, code: "07", title: "Possession of a Firearm by a Convicted Felon", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 5000, jailSeconds: 120, impound: null },
+  { class: 7, code: "08", title: "Possession of a Firearm During the Commission of a Crime", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 5000, jailSeconds: 120, impound: null },
+  { class: 7, code: "09", title: "Unlawful Transfer of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 2500, jailSeconds: 90, impound: null },
+  { class: 7, code: "10", title: "Tampering with a Firearm Serial Number", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 5000, jailSeconds: 120, impound: null },
+  { class: 7, code: "11", title: "Possession of a Firearm with an Obliterated Serial Number", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 3000, jailSeconds: 90, impound: null },
+  { class: 7, code: "12", title: "Possession of a Prohibited Weapon", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 3000, jailSeconds: 90, impound: null },
+  { class: 7, code: "13", title: "Unlawful Sale of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Felony", fine: 5000, jailSeconds: 120, impound: null },
+  { class: 7, code: "14", title: "Negligent Storage of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1000, jailSeconds: 30, impound: null },
+  { class: 7, code: "15", title: "Reckless Handling of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1500, jailSeconds: 60, impound: null },
+  { class: 7, code: "16", title: "Possession of a Firearm in a Restricted Area", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
 ];
