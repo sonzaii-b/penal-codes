@@ -9,6 +9,7 @@ const els = {
   search: document.getElementById('search'),
   results: document.getElementById('results'),
   recentCharges: document.getElementById('recentCharges'),
+  summaryBody: document.getElementById('summaryBody'),
   previewContent: document.getElementById('previewContent'),
   goBackBtn: document.getElementById('goBackBtn'),
   addBtn: document.getElementById('addBtn'),
@@ -38,6 +39,7 @@ function formatJail(seconds) {
 function classBadgeClass(classification) {
   if (classification === 'Felony') return 'badge-felony';
   if (classification === 'Misdemeanor') return 'badge-misdemeanor';
+  if (classification === 'Leave Order') return 'badge-leave-order';
   return 'badge-citation';
 }
 
@@ -154,11 +156,38 @@ els.addBtn.addEventListener('click', () => {
   recentCharges.push({ ...selectedCode });
   saveCharges();
   renderRecentCharges();
+  renderSummary();
   showToast(`Added ${codeLabel(selectedCode)}`);
   selectedCode = null;
   renderPreview();
   renderResults(els.search.value);
 });
+
+function buildCopyText() {
+  if (recentCharges.length === 0) return null;
+
+  const chargeList = recentCharges.map((c) => `${codeLabel(c)} — ${c.title}`).join(', ');
+  const totalFine = recentCharges.reduce((sum, c) => sum + c.fine, 0);
+  const totalJail = recentCharges.reduce((sum, c) => sum + c.jailSeconds, 0);
+
+  let text = `**Charge(s):** ${chargeList}\n*Total Fine:* ${formatMoney(totalFine)}`;
+  if (totalJail > 0) {
+    text += `\n*Sentence Imposed:* ${totalJail}s`;
+  }
+  return text;
+}
+
+function renderSummary() {
+  const text = buildCopyText();
+  if (!text) {
+    els.summaryBody.innerHTML = `<span style="color: var(--text-faint);">Add charges to see the total here</span>`;
+    return;
+  }
+  const html = escapeHtml(text)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+  els.summaryBody.innerHTML = html;
+}
 
 // ---------- recent charges panel ----------
 
@@ -182,6 +211,7 @@ function renderRecentCharges() {
       recentCharges.splice(i, 1);
       saveCharges();
       renderRecentCharges();
+      renderSummary();
     });
     els.recentCharges.appendChild(row);
   });
@@ -194,18 +224,10 @@ els.search.addEventListener('input', () => renderResults(els.search.value));
 // ---------- copy information ----------
 
 els.copyBtn.addEventListener('click', async () => {
-  if (recentCharges.length === 0) {
+  const text = buildCopyText();
+  if (!text) {
     showToast('No charges to copy');
     return;
-  }
-
-  const chargeList = recentCharges.map((c) => `${codeLabel(c)} — ${c.title}`).join(', ');
-  const totalFine = recentCharges.reduce((sum, c) => sum + c.fine, 0);
-  const totalJail = recentCharges.reduce((sum, c) => sum + c.jailSeconds, 0);
-
-  let text = `**Charge(s):** ${chargeList}\n*Total Fine:* ${formatMoney(totalFine)}`;
-  if (totalJail > 0) {
-    text += `\n*Sentence Imposed:* ${totalJail}s`;
   }
 
   try {
@@ -226,6 +248,7 @@ els.resetBtn.addEventListener('click', () => {
   recentCharges = [];
   saveCharges();
   renderRecentCharges();
+  renderSummary();
   showToast('Cleared');
 });
 
@@ -234,3 +257,4 @@ els.resetBtn.addEventListener('click', () => {
 renderResults();
 renderRecentCharges();
 renderPreview();
+renderSummary();
