@@ -203,4 +203,44 @@ const PENAL_CODES = [
   { class: 7, code: "14", title: "Negligent Storage of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1000, jailSeconds: 30, impound: null },
   { class: 7, code: "15", title: "Reckless Handling of a Firearm", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1500, jailSeconds: 60, impound: null },
   { class: 7, code: "16", title: "Possession of a Firearm in a Restricted Area", category: "Control Of A Deadly Weapon And Equipment", classification: "Misdemeanor", fine: 1000, jailSeconds: 60, impound: null },
+
+  // ---------------- Additional codes (added later) ----------------
+  { class: 2, code: "23", title: "Insurance Fraud", category: "Crimes Against Property", classification: "Felony", fine: 2000, jailSeconds: 60, impound: null },
+
+  { class: 4, code: "25", title: "Harboring a Fugitive", category: "Crimes Against Criminal Justice", classification: "Felony", fine: 2000, jailSeconds: 120, impound: null },
+  { class: 4, code: "26", title: "Fleeing an Incident", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 700, jailSeconds: 60, impound: null },
+  { class: 4, code: "27", title: "False Alarm", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 300, jailSeconds: 60, impound: null },
+  { class: 4, code: "28", title: "Possession of a Fraudulent ID", category: "Crimes Against Criminal Justice", classification: "Misdemeanor", fine: 900, jailSeconds: 60, impound: null },
+  { class: 4, code: "29", title: "Possession of a Fraudulent Insurance", category: "Crimes Against Criminal Justice", classification: "Citation", fine: 1000, jailSeconds: 0, impound: null },
+
+  { class: 5, code: "04", title: "Distribution of Food(s) w/o Proper Documents", category: "Crimes Against Public Peace", classification: "Misdemeanor", fine: 900, jailSeconds: 0, impound: null },
+
+  { class: 6, code: "91", title: "Vehicular Assault", category: "Traffic Offenses", classification: "Felony", fine: 2000, jailSeconds: 60, impound: null },
+  { class: 6, code: "92", title: "At Fault at an Injury", category: "Traffic Offenses", classification: "Felony", fine: 1500, jailSeconds: 60, impound: null },
+  { class: 6, code: "93", title: "Causing a Crash", category: "Traffic Offenses", classification: "Misdemeanor", fine: 800, jailSeconds: 30, impound: null },
+  { class: 6, code: "94", title: "Causing Crash with Death", category: "Traffic Offenses", classification: "Felony", fine: 1500, jailSeconds: 120, impound: null },
+  { class: 6, code: "95", title: "Hands Free Violation", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "96", title: "Curb Hopping", category: "Traffic Offenses", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 6, code: "97", title: "Failure to Properly Attach Front Plate", category: "Traffic Offenses", classification: "Citation", fine: 400, jailSeconds: 0, impound: null },
+  { class: 6, code: "98", title: "Improper Usage of Warning Lights", category: "Traffic Offenses", classification: "Citation", fine: 100, jailSeconds: 0, impound: null },
+
+  // ---------------- Title 8: Crimes Against Nature ----------------
+  { class: 8, code: "01", title: "Unlawfully Injuring Wildlife", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 1000, jailSeconds: 0, impound: null },
+  { class: 8, code: "02", title: "Unlawful Sale of Wildlife", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 2000, jailSeconds: 90, impound: null },
+  { class: 8, code: "03", title: "Unlawfully Harvesting Natural Resources", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 600, jailSeconds: 30, impound: null },
+  { class: 8, code: "04", title: "Unlawful Captivity of Wildlife", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 900, jailSeconds: 30, impound: null },
+  { class: 8, code: "05", title: "Disruption Of Wildlife", category: "Crimes Against Nature", classification: "Citation", fine: 500, jailSeconds: 0, impound: null },
+  { class: 8, code: "06", title: "Camping On A Non-designated Campground", category: "Crimes Against Nature", classification: "Citation", fine: 150, jailSeconds: 0, impound: null },
+  { class: 8, code: "07", title: "In Park After Hours", category: "Crimes Against Nature", classification: "Citation", fine: 150, jailSeconds: 0, impound: null },
+  { class: 8, code: "08", title: "Trespassing on Rail Road Property", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 800, jailSeconds: 30, impound: null },
+  // NOTE: sheet didn't list a classification for (8)09 — defaulted to Misdemeanor, please double-check
+  { class: 8, code: "09", title: "Illegally Harvesting Game (per animal)", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 2000, jailSeconds: 60, impound: null },
+  { class: 8, code: "10", title: "Possession of Illegally Harvested Game (per animal)", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 800, jailSeconds: 30, impound: null },
+  { class: 8, code: "11", title: "Destroying Wildlife By Means Of Arson", category: "Crimes Against Nature", classification: "Felony", fine: 15000, jailSeconds: 180, impound: null },
+  { class: 8, code: "12", title: "Illegal Off-Roading", category: "Crimes Against Nature", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
+  { class: 8, code: "13", title: "Trespassing On A National Park", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 150, jailSeconds: 0, impound: null },
+  { class: 8, code: "14", title: "Camping Without a Permit", category: "Crimes Against Nature", classification: "Leave Order", fine: 0, jailSeconds: 0, impound: null },
+  { class: 8, code: "15", title: "Discharge of Firearm Within a National Park", category: "Crimes Against Nature", classification: "Felony", fine: 8000, jailSeconds: 100, impound: null },
+  { class: 8, code: "16", title: "Littering Within a National Park", category: "Crimes Against Nature", classification: "Citation", fine: 150, jailSeconds: 0, impound: null },
+  { class: 8, code: "17", title: "Entering a Restricted Area of a National Park", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 800, jailSeconds: 90, impound: null },
 ];
