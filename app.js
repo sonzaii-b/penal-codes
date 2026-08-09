@@ -30,6 +30,23 @@ function formatMoney(n) {
   return `$${n.toLocaleString('en-US')}`;
 }
 
+function formatJail(seconds) {
+  if (!seconds) return 'None';
+  return `${seconds}s`;
+}
+
+function classBadgeClass(classification) {
+  if (classification === 'Felony') return 'badge-felony';
+  if (classification === 'Misdemeanor') return 'badge-misdemeanor';
+  return 'badge-citation';
+}
+
+function impoundLabel(impound) {
+  if (impound === true) return 'Yes';
+  if (impound === 'discretion') return 'Trooper discretion';
+  return 'No';
+}
+
 function loadCharges() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -61,7 +78,9 @@ function renderResults(query = '') {
       entry.title.toLowerCase().includes(q) ||
       codeLabel(entry).toLowerCase().includes(q) ||
       String(entry.code).toLowerCase().includes(q) ||
-      String(entry.class).includes(q)
+      String(entry.class).includes(q) ||
+      entry.classification.toLowerCase().includes(q) ||
+      entry.category.toLowerCase().includes(q)
     );
   });
 
@@ -81,7 +100,7 @@ function renderResults(query = '') {
     row.innerHTML = `
       <span class="code-chip">${codeLabel(entry)}</span>
       <span class="result-title">${escapeHtml(entry.title)}</span>
-      <span class="result-fine">${formatMoney(entry.fine)}</span>
+      <span class="class-badge ${classBadgeClass(entry.classification)}">${entry.classification}</span>
     `;
     row.addEventListener('click', () => selectCode(entry));
     els.results.appendChild(row);
@@ -115,9 +134,12 @@ function renderPreview() {
 
   els.previewContent.innerHTML = `
     <span class="preview-code">${codeLabel(selectedCode)}</span>
+    <span class="class-badge ${classBadgeClass(selectedCode.classification)}" style="margin-left:8px;">${selectedCode.classification}</span>
     <p class="preview-title">${escapeHtml(selectedCode.title)}</p>
-    <div class="preview-row"><span>Fine</span><span>${formatMoney(selectedCode.fine)}</span></div>
-    <div class="preview-row"><span>Jail time</span><span>${selectedCode.jailDays > 0 ? selectedCode.jailDays + ' day' + (selectedCode.jailDays === 1 ? '' : 's') : 'None'}</span></div>
+    <div class="preview-row"><span>Fine</span><span>${selectedCode.fine > 0 ? formatMoney(selectedCode.fine) : 'None'}</span></div>
+    <div class="preview-row"><span>Jail time</span><span>${formatJail(selectedCode.jailSeconds)}</span></div>
+    <div class="preview-row"><span>Impoundment</span><span>${impoundLabel(selectedCode.impound)}</span></div>
+    <div class="preview-row"><span>Section</span><span style="font-family: var(--font-body); font-size: 12.5px;">${escapeHtml(selectedCode.category)}</span></div>
   `;
 }
 
@@ -153,6 +175,7 @@ function renderRecentCharges() {
     row.innerHTML = `
       <span class="code-chip">${codeLabel(entry)}</span>
       <span class="charge-title">${escapeHtml(entry.title)}</span>
+      <span class="class-badge ${classBadgeClass(entry.classification)}">${entry.classification}</span>
       <button class="remove-btn" title="Remove" aria-label="Remove ${escapeHtml(entry.title)}">&times;</button>
     `;
     row.querySelector('.remove-btn').addEventListener('click', () => {
@@ -178,11 +201,11 @@ els.copyBtn.addEventListener('click', async () => {
 
   const chargeList = recentCharges.map((c) => `${codeLabel(c)} — ${c.title}`).join(', ');
   const totalFine = recentCharges.reduce((sum, c) => sum + c.fine, 0);
-  const totalJail = recentCharges.reduce((sum, c) => sum + c.jailDays, 0);
+  const totalJail = recentCharges.reduce((sum, c) => sum + c.jailSeconds, 0);
 
   let text = `**Charge(s):** ${chargeList}\n*Total Fine:* ${formatMoney(totalFine)}`;
   if (totalJail > 0) {
-    text += `\n*Sentence Imposed:* ${totalJail} day${totalJail === 1 ? '' : 's'}`;
+    text += `\n*Sentence Imposed:* ${totalJail}s`;
   }
 
   try {
