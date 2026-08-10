@@ -39,7 +39,7 @@ function formatJail(seconds) {
 function classBadgeClass(classification) {
   if (classification === 'Felony') return 'badge-felony';
   if (classification === 'Misdemeanor') return 'badge-misdemeanor';
-  if (classification === 'Leave Order') return 'badge-leave-order';
+  if (classification === 'Eviction') return 'badge-leave-order';
   return 'badge-citation';
 }
 
