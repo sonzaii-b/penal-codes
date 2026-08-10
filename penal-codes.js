@@ -239,7 +239,7 @@ const PENAL_CODES = [
   { class: 8, code: "11", title: "Destroying Wildlife By Means Of Arson", category: "Crimes Against Nature", classification: "Felony", fine: 15000, jailSeconds: 180, impound: null },
   { class: 8, code: "12", title: "Illegal Off-Roading", category: "Crimes Against Nature", classification: "Citation", fine: 250, jailSeconds: 0, impound: null },
   { class: 8, code: "13", title: "Trespassing On A National Park", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 150, jailSeconds: 0, impound: null },
-  { class: 8, code: "14", title: "Camping Without a Permit", category: "Crimes Against Nature", classification: "Leave Order", fine: 0, jailSeconds: 0, impound: null },
+  { class: 8, code: "14", title: "Camping Without a Permit", category: "Crimes Against Nature", classification: "Eviction", fine: 0, jailSeconds: 0, impound: null },
   { class: 8, code: "15", title: "Discharge of Firearm Within a National Park", category: "Crimes Against Nature", classification: "Felony", fine: 8000, jailSeconds: 100, impound: null },
   { class: 8, code: "16", title: "Littering Within a National Park", category: "Crimes Against Nature", classification: "Citation", fine: 150, jailSeconds: 0, impound: null },
   { class: 8, code: "17", title: "Entering a Restricted Area of a National Park", category: "Crimes Against Nature", classification: "Misdemeanor", fine: 800, jailSeconds: 90, impound: null },
